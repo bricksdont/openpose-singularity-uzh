@@ -101,3 +101,20 @@ This processes all video files (`*.mp4`, `*.avi`, `*.mov`) in `<input_folder>`, 
 bash scripts/batch_to_pose.sh /path/to/my/videos /path/to/pose/output
 # Creates: /path/to/pose/output/video1.pose, /path/to/pose/output/video2.pose, ...
 ```
+
+## Performance Notes
+
+Benchmarked on a single NVIDIA Tesla T4 (15 GB VRAM) running OpenPose with `--model_pose BODY_25 --face --hand`:
+
+| Metric | Observed | Capacity |
+|---|---|---|
+| GPU compute utilization | 86–93% | Nearly saturated |
+| VRAM usage | ~5 GB | 15 GB total (33% used) |
+| Processing speed | ~2.8 fps | — |
+
+**Parallelism:** Although VRAM has headroom (~10 GB free), GPU compute is already near saturation at 86–93%. Running multiple OpenPose instances in parallel on the same GPU is unlikely to improve overall throughput since they would contend for the same compute cores. Videos are therefore processed sequentially in `batch_to_pose.sh`.
+
+**Options for faster processing:**
+- **Multi-GPU:** Run one instance per GPU on a multi-GPU machine
+- **Lower resolution:** Reduce input video resolution to decrease per-frame compute
+- **Fewer keypoints:** Skip `--face` and/or `--hand` flags if only body keypoints are needed
