@@ -1,0 +1,13 @@
+# Singularity images
+*.sif
+
+# Data directories
+data/input/
+data/output/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
