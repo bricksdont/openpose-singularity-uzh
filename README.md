@@ -33,41 +33,6 @@ bash scripts/convert_to_pose.sh
 bash scripts/visualize_pose.sh
 ```
 
-## Repository Structure
-
-```
-.
-├── openpose.def                 # Singularity definition file (documentation/reproducibility)
-├── requirements.txt             # Python dependencies for pose conversion/visualization
-├── scripts/
-│   ├── build_container.sh       # Pull the container image as openpose.sif
-│   ├── test_gpu.sh              # Verify GPU and OpenPose binary inside container
-│   ├── download_test_video.sh   # Download test video to data/input/
-│   ├── run_openpose.sh          # Run OpenPose pose estimation
-│   ├── setup_venv.sh            # Create Python venv and install dependencies
-│   ├── convert_to_pose.py       # Convert OpenPose JSON to .pose format
-│   ├── convert_to_pose.sh       # Run pose conversion
-│   ├── batch_to_pose.sh         # Batch-process a folder of videos to .pose files
-│   ├── visualize_pose.py        # Overlay .pose skeleton on video
-│   └── visualize_pose.sh        # Run pose visualization
-├── data/
-│   ├── input/                   # Input videos (git-ignored)
-│   └── output/                  # Results (git-ignored)
-│       ├── output_video.avi     # Video with skeleton overlay
-│       ├── keypoints/           # Per-frame JSON keypoint files
-│       ├── pose_output.pose     # Binary .pose file
-│       └── pose_overlay.mp4    # Video with .pose skeleton overlay
-├── example/                     # Example pipeline output (committed to repo)
-│   ├── input/test_video.mp4
-│   └── output/
-│       ├── output_video.avi
-│       ├── keypoints/           # 133 JSON files
-│       ├── pose_output.pose
-│       └── pose_overlay.mp4
-├── venv/                        # Python virtual environment (git-ignored)
-└── openpose.sif                 # Container image (git-ignored)
-```
-
 ## Output
 
 After running the full pipeline, `data/output/` contains:
@@ -118,3 +83,38 @@ Benchmarked on a single NVIDIA Tesla T4 (15 GB VRAM) running OpenPose with `--mo
 - **Multi-GPU:** Run one instance per GPU on a multi-GPU machine
 - **Lower resolution:** Reduce input video resolution to decrease per-frame compute
 - **Fewer keypoints:** Skip `--face` and/or `--hand` flags if only body keypoints are needed
+
+## Repository Structure
+
+```
+.
+├── openpose.def                 # Singularity definition file (documentation/reproducibility)
+├── requirements.txt             # Python dependencies for pose conversion/visualization
+├── scripts/
+│   ├── build_container.sh       # Pull the container image as openpose.sif
+│   ├── test_gpu.sh              # Verify GPU and OpenPose binary inside container
+│   ├── download_test_video.sh   # Download test video to data/input/
+│   ├── run_openpose.sh          # Run OpenPose pose estimation
+│   ├── setup_venv.sh            # Create Python venv and install dependencies
+│   ├── convert_to_pose.py       # Convert OpenPose JSON to .pose format
+│   ├── convert_to_pose.sh       # Run pose conversion
+│   ├── batch_to_pose.sh         # Batch-process a folder of videos to .pose files
+│   ├── visualize_pose.py        # Overlay .pose skeleton on video
+│   └── visualize_pose.sh        # Run pose visualization
+├── data/
+│   ├── input/                   # Input videos (git-ignored)
+│   └── output/                  # Results (git-ignored)
+│       ├── output_video.avi     # Video with skeleton overlay
+│       ├── keypoints/           # Per-frame JSON keypoint files
+│       ├── pose_output.pose     # Binary .pose file
+│       └── pose_overlay.mp4    # Video with .pose skeleton overlay
+├── example/                     # Example pipeline output (committed to repo)
+│   ├── input/test_video.mp4
+│   └── output/
+│       ├── output_video.avi
+│       ├── keypoints/           # 133 JSON files
+│       ├── pose_output.pose
+│       └── pose_overlay.mp4
+├── venv/                        # Python virtual environment (git-ignored)
+└── openpose.sif                 # Container image (git-ignored)
+```
