@@ -47,6 +47,7 @@ bash scripts/visualize_pose.sh
 │   ├── setup_venv.sh            # Create Python venv and install dependencies
 │   ├── convert_to_pose.py       # Convert OpenPose JSON to .pose format
 │   ├── convert_to_pose.sh       # Run pose conversion
+│   ├── batch_to_pose.sh         # Batch-process a folder of videos to .pose files
 │   ├── visualize_pose.py        # Overlay .pose skeleton on video
 │   └── visualize_pose.sh        # Run pose visualization
 ├── data/
@@ -81,3 +82,22 @@ After running the full pipeline, `data/output/` contains:
 - **`pose_overlay.mp4`** — video with skeleton from `.pose` data overlaid on the original input
 
 The `example/` directory contains a complete set of example outputs from the pipeline for reference.
+
+## Batch Processing
+
+To process an entire folder of videos into `.pose` files in one command:
+
+```bash
+bash scripts/batch_to_pose.sh <input_folder> <output_folder>
+```
+
+This processes all video files (`*.mp4`, `*.avi`, `*.mov`) in `<input_folder>`, runs OpenPose and pose conversion for each, and writes the resulting `.pose` files to `<output_folder>`.
+
+**Prerequisites:** the Singularity container (`openpose.sif`) and Python virtual environment (`venv/`) must already be set up (steps 1 and 5 from Quick Start).
+
+**Example:**
+
+```bash
+bash scripts/batch_to_pose.sh /path/to/my/videos /path/to/pose/output
+# Creates: /path/to/pose/output/video1.pose, /path/to/pose/output/video2.pose, ...
+```

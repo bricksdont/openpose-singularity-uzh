@@ -16,7 +16,20 @@ def main():
     parser.add_argument("--fps", type=float, default=24, help="Video frame rate (default: 24)")
     parser.add_argument("--width", type=int, default=640, help="Video width in pixels (default: 640)")
     parser.add_argument("--height", type=int, default=480, help="Video height in pixels (default: 480)")
+    parser.add_argument("--video", default=None,
+                        help="Path to source video file; when provided, fps/width/height are read from the video")
     args = parser.parse_args()
+
+    if args.video is not None:
+        import cv2
+        cap = cv2.VideoCapture(args.video)
+        if not cap.isOpened():
+            print(f"ERROR: Cannot open video file: {args.video}")
+            raise SystemExit(1)
+        args.fps = cap.get(cv2.CAP_PROP_FPS)
+        args.width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        args.height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        cap.release()
 
     if not os.path.isdir(args.directory):
         print(f"ERROR: Keypoints directory not found: {args.directory}")
