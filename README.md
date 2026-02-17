@@ -67,6 +67,31 @@ bash scripts/batch_to_pose.sh /path/to/my/videos /path/to/pose/output
 # Creates: /path/to/pose/output/video1.pose, /path/to/pose/output/video2.pose, ...
 ```
 
+## SLURM Cluster Processing
+
+For large-scale processing on the UZH ScienceCluster, split videos across multiple GPU jobs:
+
+```bash
+bash scripts/slurm_submit.sh <input_folder> <output_folder> [--chunks N]
+```
+
+This distributes videos across N SLURM jobs (default: 4), each requesting a V100 GPU. All output `.pose` files are written to the same `<output_folder>`.
+
+**Prerequisites:** the container image (`openpose.sif`) and Python virtual environment (`venv/`) must already be set up (steps 1 and 5 from Quick Start). The script must be run on a SLURM cluster with `sbatch` available.
+
+**Example:**
+
+```bash
+# From the repo directory on the cluster:
+bash scripts/slurm_submit.sh /path/to/videos /path/to/output --chunks 8
+
+# Monitor jobs:
+squeue -u $USER
+
+# View logs:
+tail -f /path/to/output/.slurm_logs/job_*.out
+```
+
 ## Performance Notes
 
 Benchmarked on a single NVIDIA Tesla T4 (15 GB VRAM) running OpenPose with `--model_pose BODY_25 --face --hand`:
@@ -99,6 +124,8 @@ Benchmarked on a single NVIDIA Tesla T4 (15 GB VRAM) running OpenPose with `--mo
 │   ├── convert_to_pose.py       # Convert OpenPose JSON to .pose format
 │   ├── convert_to_pose.sh       # Run pose conversion
 │   ├── batch_to_pose.sh         # Batch-process a folder of videos to .pose files
+│   ├── slurm_submit.sh          # Submit parallel SLURM jobs for batch processing
+│   ├── slurm_job.sh             # SLURM job script (called by slurm_submit.sh)
 │   ├── visualize_pose.py        # Overlay .pose skeleton on video
 │   └── visualize_pose.sh        # Run pose visualization
 ├── data/

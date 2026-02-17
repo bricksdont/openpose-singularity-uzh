@@ -45,6 +45,16 @@ if [ ! -d "$VENV_DIR" ]; then
     exit 1
 fi
 
+# --- Detect container runtime ---
+if command -v apptainer &>/dev/null; then
+    CONTAINER_CMD=apptainer
+elif command -v singularity &>/dev/null; then
+    CONTAINER_CMD=singularity
+else
+    echo "ERROR: Neither apptainer nor singularity found in PATH."
+    exit 1
+fi
+
 mkdir -p "$OUTPUT_FOLDER"
 source "$VENV_DIR/bin/activate"
 
@@ -81,7 +91,7 @@ for VIDEO_FILE in "${VIDEO_FILES[@]}"; do
 
     VIDEO_START=$(date +%s)
 
-    if singularity exec --nv \
+    if $CONTAINER_CMD exec --nv \
         --bind "$INPUT_FOLDER:/input:ro" \
         --bind "$TEMP_KEYPOINTS:/output_keypoints" \
         "$SIF_FILE" \
