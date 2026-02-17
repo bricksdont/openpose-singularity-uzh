@@ -56,6 +56,13 @@ bash scripts/visualize_pose.sh
 │       ├── keypoints/           # Per-frame JSON keypoint files
 │       ├── pose_output.pose     # Binary .pose file
 │       └── pose_overlay.mp4    # Video with .pose skeleton overlay
+├── example/                     # Example pipeline output (committed to repo)
+│   ├── input/test_video.mp4
+│   └── output/
+│       ├── output_video.avi
+│       ├── keypoints/           # 133 JSON files
+│       ├── pose_output.pose
+│       └── pose_overlay.mp4
 ├── venv/                        # Python virtual environment (git-ignored)
 └── openpose.sif                 # Container image (git-ignored)
 ```
@@ -72,3 +79,5 @@ After running the full pipeline, `data/output/` contains:
   - `face_keypoints_2d` (70 keypoints)
 - **`pose_output.pose`** — binary `.pose` file containing all keypoints in [pose-format](https://github.com/sign-language-processing/pose) structure
 - **`pose_overlay.mp4`** — video with skeleton from `.pose` data overlaid on the original input
+
+The `example/` directory contains a complete set of example outputs from the pipeline for reference.
