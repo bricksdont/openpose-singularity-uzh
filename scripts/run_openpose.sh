@@ -22,6 +22,16 @@ if [ ! -f "$VIDEO_FILE" ]; then
     exit 1
 fi
 
+# --- Detect container runtime ---
+if command -v apptainer &>/dev/null; then
+    CONTAINER_CMD=apptainer
+elif command -v singularity &>/dev/null; then
+    CONTAINER_CMD=singularity
+else
+    echo "ERROR: Neither apptainer nor singularity found in PATH."
+    exit 1
+fi
+
 mkdir -p "$KEYPOINTS_DIR"
 
 echo "Running OpenPose pose estimation..."
@@ -29,7 +39,7 @@ echo "Input video: $VIDEO_FILE"
 echo "Output directory: $OUTPUT_DIR"
 echo
 
-singularity exec --nv \
+$CONTAINER_CMD exec --nv \
     --bind "$INPUT_DIR:/input:ro" \
     --bind "$OUTPUT_DIR:/output" \
     "$SIF_FILE" \

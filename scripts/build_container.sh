@@ -13,12 +13,22 @@ if [ -f "$SIF_FILE" ]; then
     exit 0
 fi
 
+# --- Detect container runtime ---
+if command -v apptainer &>/dev/null; then
+    CONTAINER_CMD=apptainer
+elif command -v singularity &>/dev/null; then
+    CONTAINER_CMD=singularity
+else
+    echo "ERROR: Neither apptainer nor singularity found in PATH."
+    exit 1
+fi
+
 echo "Pulling OpenPose container image..."
 echo "Source: $DOCKER_IMAGE"
 echo "This may take 10-15 minutes depending on network speed."
 echo
 
-singularity pull "$SIF_FILE" "$DOCKER_IMAGE"
+$CONTAINER_CMD pull "$SIF_FILE" "$DOCKER_IMAGE"
 
 echo
 echo "Build complete: $SIF_FILE"

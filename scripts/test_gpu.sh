@@ -11,12 +11,22 @@ if [ ! -f "$SIF_FILE" ]; then
     exit 1
 fi
 
+# --- Detect container runtime ---
+if command -v apptainer &>/dev/null; then
+    CONTAINER_CMD=apptainer
+elif command -v singularity &>/dev/null; then
+    CONTAINER_CMD=singularity
+else
+    echo "ERROR: Neither apptainer nor singularity found in PATH."
+    exit 1
+fi
+
 echo "=== GPU check (nvidia-smi inside container) ==="
-singularity exec --nv "$SIF_FILE" nvidia-smi
+$CONTAINER_CMD exec --nv "$SIF_FILE" nvidia-smi
 
 echo
 echo "=== OpenPose binary check (--help) ==="
-singularity exec --nv "$SIF_FILE" /openpose/build/examples/openpose/openpose.bin --help 2>&1 | head -20
+$CONTAINER_CMD exec --nv "$SIF_FILE" /openpose/build/examples/openpose/openpose.bin --help 2>&1 | head -20
 
 echo
 echo "GPU verification passed."
