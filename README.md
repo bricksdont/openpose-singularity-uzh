@@ -28,6 +28,9 @@ bash scripts/setup_venv.sh
 
 # 6. Convert keypoints to .pose format
 bash scripts/convert_to_pose.sh
+
+# 7. Visualize pose overlay on video
+bash scripts/visualize_pose.sh
 ```
 
 ## Repository Structure
@@ -43,13 +46,16 @@ bash scripts/convert_to_pose.sh
 │   ├── run_openpose.sh          # Run OpenPose pose estimation
 │   ├── setup_venv.sh            # Create Python venv and install dependencies
 │   ├── convert_to_pose.py       # Convert OpenPose JSON to .pose format
-│   └── convert_to_pose.sh       # Run pose conversion
+│   ├── convert_to_pose.sh       # Run pose conversion
+│   ├── visualize_pose.py        # Overlay .pose skeleton on video
+│   └── visualize_pose.sh        # Run pose visualization
 ├── data/
 │   ├── input/                   # Input videos (git-ignored)
 │   └── output/                  # Results (git-ignored)
 │       ├── output_video.avi     # Video with skeleton overlay
 │       ├── keypoints/           # Per-frame JSON keypoint files
-│       └── pose_output.pose     # Binary .pose file
+│       ├── pose_output.pose     # Binary .pose file
+│       └── pose_overlay.mp4    # Video with .pose skeleton overlay
 ├── venv/                        # Python virtual environment (git-ignored)
 └── openpose.sif                 # Container image (git-ignored)
 ```
@@ -65,3 +71,4 @@ After running the full pipeline, `data/output/` contains:
   - `hand_right_keypoints_2d` (21 keypoints)
   - `face_keypoints_2d` (70 keypoints)
 - **`pose_output.pose`** — binary `.pose` file containing all keypoints in [pose-format](https://github.com/sign-language-processing/pose) structure
+- **`pose_overlay.mp4`** — video with skeleton from `.pose` data overlaid on the original input
