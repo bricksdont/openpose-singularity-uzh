@@ -1,0 +1,17 @@
+Bootstrap: docker
+From: cwaffles/openpose
+
+%labels
+    Author UZH
+    Description OpenPose pose estimation with CUDA 11.3.1 and cuDNN 8
+    Version 1.0
+
+%help
+    OpenPose pose estimation container (BODY_25 model with face and hand detection).
+    Based on cwaffles/openpose Docker image (CUDA 11.3.1, cuDNN 8).
+
+    Usage:
+        singularity run --nv openpose.sif --video /input/video.mp4 --write_json /output/keypoints/
+
+%runscript
+    exec /openpose/build/examples/openpose/openpose.bin "$@"
