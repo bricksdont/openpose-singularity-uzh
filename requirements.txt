@@ -1,0 +1,3 @@
+pose-format
+opencv-python
+vidgear

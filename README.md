@@ -22,6 +22,12 @@ bash scripts/download_test_video.sh
 
 # 4. Run OpenPose on the test video
 bash scripts/run_openpose.sh
+
+# 5. Set up Python virtual environment
+bash scripts/setup_venv.sh
+
+# 6. Convert keypoints to .pose format
+bash scripts/convert_to_pose.sh
 ```
 
 ## Repository Structure
@@ -29,22 +35,28 @@ bash scripts/run_openpose.sh
 ```
 .
 ├── openpose.def                 # Singularity definition file (documentation/reproducibility)
+├── requirements.txt             # Python dependencies for pose conversion/visualization
 ├── scripts/
 │   ├── build_container.sh       # Pull the container image as openpose.sif
 │   ├── test_gpu.sh              # Verify GPU and OpenPose binary inside container
 │   ├── download_test_video.sh   # Download test video to data/input/
-│   └── run_openpose.sh          # Run OpenPose pose estimation
+│   ├── run_openpose.sh          # Run OpenPose pose estimation
+│   ├── setup_venv.sh            # Create Python venv and install dependencies
+│   ├── convert_to_pose.py       # Convert OpenPose JSON to .pose format
+│   └── convert_to_pose.sh       # Run pose conversion
 ├── data/
 │   ├── input/                   # Input videos (git-ignored)
 │   └── output/                  # Results (git-ignored)
 │       ├── output_video.avi     # Video with skeleton overlay
-│       └── keypoints/           # Per-frame JSON keypoint files
+│       ├── keypoints/           # Per-frame JSON keypoint files
+│       └── pose_output.pose     # Binary .pose file
+├── venv/                        # Python virtual environment (git-ignored)
 └── openpose.sif                 # Container image (git-ignored)
 ```
 
 ## Output
 
-After running OpenPose, `data/output/` contains:
+After running the full pipeline, `data/output/` contains:
 
 - **`output_video.avi`** — input video with skeleton overlay rendered on each frame
 - **`keypoints/`** — one JSON file per frame with arrays:
@@ -52,3 +64,4 @@ After running OpenPose, `data/output/` contains:
   - `hand_left_keypoints_2d` (21 keypoints)
   - `hand_right_keypoints_2d` (21 keypoints)
   - `face_keypoints_2d` (70 keypoints)
+- **`pose_output.pose`** — binary `.pose` file containing all keypoints in [pose-format](https://github.com/sign-language-processing/pose) structure
