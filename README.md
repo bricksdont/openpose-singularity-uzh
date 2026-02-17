@@ -77,7 +77,13 @@ bash scripts/slurm_submit.sh <input_folder> <output_folder> [--chunks N]
 
 This distributes videos across N SLURM jobs (default: 4), each requesting a V100 GPU. All output `.pose` files are written to the same `<output_folder>`.
 
-**Prerequisites:** the container image (`openpose.sif`) and Python virtual environment (`venv/`) must already be set up (steps 1 and 5 from Quick Start). The script must be run on a SLURM cluster with `sbatch` available.
+**Building the container on the cluster:** Login nodes may not have enough memory to build the SIF image. Submit it as a SLURM job instead:
+
+```bash
+sbatch scripts/slurm_build_container.sh
+```
+
+**Prerequisites:** the container image (`openpose.sif`) and Python virtual environment (`venv/`) must already be set up. The script must be run on a SLURM cluster with `sbatch` available.
 
 **Example:**
 
@@ -124,6 +130,7 @@ Benchmarked on a single NVIDIA Tesla T4 (15 GB VRAM) running OpenPose with `--mo
 │   ├── convert_to_pose.py       # Convert OpenPose JSON to .pose format
 │   ├── convert_to_pose.sh       # Run pose conversion
 │   ├── batch_to_pose.sh         # Batch-process a folder of videos to .pose files
+│   ├── slurm_build_container.sh  # SLURM job to build the container image
 │   ├── slurm_submit.sh          # Submit parallel SLURM jobs for batch processing
 │   ├── slurm_job.sh             # SLURM job script (called by slurm_submit.sh)
 │   ├── visualize_pose.py        # Overlay .pose skeleton on video
