@@ -23,6 +23,7 @@ if [ ! -f "$VIDEO_FILE" ]; then
 fi
 
 # --- Detect container runtime ---
+module load apptainer 2>/dev/null || true
 if command -v apptainer &>/dev/null; then
     CONTAINER_CMD=apptainer
 elif command -v singularity &>/dev/null; then
