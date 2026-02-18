@@ -100,7 +100,7 @@ tail -f /path/to/output/.slurm_logs/job_*.out
 
 ## Performance Notes
 
-Benchmarked on a single NVIDIA Tesla T4 (15 GB VRAM) running OpenPose with `--model_pose BODY_25 --face --hand`:
+Benchmarked on a single NVIDIA Tesla T4 (15 GB VRAM) running OpenPose with `--model_pose BODY_25 --face --hand` on 640x480 input video:
 
 | Metric | Observed | Capacity |
 |---|---|---|
