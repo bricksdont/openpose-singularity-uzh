@@ -100,13 +100,12 @@ tail -f /path/to/output/.slurm_logs/job_*.out
 
 ## Performance Notes
 
-Benchmarked on a single NVIDIA Tesla T4 (15 GB VRAM) running OpenPose with `--model_pose BODY_25 --face --hand` on 640x480 input video:
+Benchmarked with `--model_pose BODY_25 --face --hand`:
 
-| Metric | Observed | Capacity |
-|---|---|---|
-| GPU compute utilization | 86–93% | Nearly saturated |
-| VRAM usage | ~5 GB | 15 GB total (33% used) |
-| Processing speed | ~2.8 fps | — |
+| GPU | VRAM | Input Resolution | Processing Speed |
+|---|---|---|---|
+| Tesla T4 | 15 GB | 640x480 | ~2.8 fps |
+| Tesla V100 | 32 GB | 210x260 | ~4.1 fps |
 
 **Parallelism:** Although VRAM has headroom (~10 GB free), GPU compute is already near saturation at 86–93%. Running multiple OpenPose instances in parallel on the same GPU is unlikely to improve overall throughput since they would contend for the same compute cores. Videos are therefore processed sequentially in `batch_to_pose.sh`.
 
