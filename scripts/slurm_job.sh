@@ -10,8 +10,7 @@ set -euo pipefail
 # --- Arguments (passed by slurm_submit.sh) ---
 CHUNK_DIR="$1"
 OUTPUT_FOLDER="$2"
-
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_DIR="$3"
 
 echo "=== SLURM Job $SLURM_JOB_ID ==="
 echo "Chunk dir: $CHUNK_DIR"

@@ -119,7 +119,7 @@ for i in $(seq 0 $((NUM_CHUNKS - 1))); do
     JOB_ID=$(sbatch \
         --job-name="openpose_chunk_$i" \
         --output="$LOG_DIR/job_%j.out" \
-        "$SCRIPT_DIR/slurm_job.sh" "$CHUNK_DIR" "$OUTPUT_FOLDER" \
+        "$SCRIPT_DIR/slurm_job.sh" "$CHUNK_DIR" "$OUTPUT_FOLDER" "$SCRIPT_DIR" \
         | grep -o '[0-9]*')
     JOB_IDS+=("$JOB_ID")
     echo "Submitted chunk $i -> SLURM job $JOB_ID"

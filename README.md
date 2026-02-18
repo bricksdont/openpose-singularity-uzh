@@ -77,7 +77,7 @@ bash scripts/slurm_submit.sh <input_folder> <output_folder> [--chunks N]
 
 This distributes videos across N SLURM jobs (default: 4), each requesting a V100 GPU. All output `.pose` files are written to the same `<output_folder>`.
 
-**Building the container on the cluster:** Login nodes may not have enough memory to build the SIF image. Submit it as a SLURM job instead:
+**Building the container on the cluster:** Login nodes may not have enough memory to build the SIF image. Submit it as a SLURM job instead (run from the repo root):
 
 ```bash
 sbatch scripts/slurm_build_container.sh
