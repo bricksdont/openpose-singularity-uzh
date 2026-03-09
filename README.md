@@ -151,3 +151,14 @@ Benchmarked with `--model_pose BODY_25 --face --hand`:
 ├── venv/                        # Python virtual environment (git-ignored)
 └── openpose.sif                 # Container image (git-ignored)
 ```
+
+## Acknowledgements
+
+```bibtex
+@misc{muller2026openpose-singularity-uzh, 
+    title={OpenPose with Singularity or Apptainer (UZH)},
+    author={M{\"u}ller, Mathias},
+    howpublished={\url{https://github.com/bricksdont/openpose-singularity-uzh}},
+    year={2026}
+}
+```
