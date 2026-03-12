@@ -1,12 +1,13 @@
 # OpenPose with Singularity or Apptainer (UZH)
 
-Run [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) pose estimation inside a Singularity (or alternatively, Apptainer) container with GPU acceleration. Dedicated code for running on the UZH SLURM cluster.
+Run [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) pose estimation inside a Singularity (or alternatively, Apptainer) container with GPU acceleration.
+Dedicated code for running on the UZH SLURM cluster.
 
 
 
 ## Prerequisites
 
-- Singularity CE >= 3.7
+- Singularity ≥ 3.x or Apptainer ≥ 1.x
 - NVIDIA GPU with driver supporting CUDA 11.x (tested with Tesla T4, driver 590.48.01)
 - `wget` (for downloading test video)
 
