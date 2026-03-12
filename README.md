@@ -1,6 +1,8 @@
 # OpenPose with Singularity or Apptainer (UZH)
 
-Run [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) pose estimation inside a Singularity (or alternatively, Apptainer) container with GPU acceleration.
+Run [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) pose estimation inside a Singularity (or alternatively, Apptainer) container with GPU acceleration. Dedicated code for running on the UZH SLURM cluster.
+
+
 
 ## Prerequisites
 
